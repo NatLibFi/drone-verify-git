@@ -1,5 +1,8 @@
 #!/bin/sh
-git clone $DRONE_REPO_LINK .
+
+echo $PLUGIN_SIGNING_KEYS | gpg --import -q
+
+git clone -q $DRONE_REPO_LINK .
 git verify-commit $DRONE_COMMIT
 
 if test $? -ne 0;then
@@ -7,4 +10,4 @@ if test $? -ne 0;then
   exit 1
 fi
 
-git checkout $DRONE_COMMIT
+git checkout -q $DRONE_COMMIT
